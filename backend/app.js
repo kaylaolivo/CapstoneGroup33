@@ -2,7 +2,8 @@ const express = require("express");
 const connectDB = require("./config/db");
 const booksRoutes = require("./routes/api/books");
 const coursesRoutes = require("./routes/api/courses");
-const listingsRoutes = require("./routes/api/listings")
+const listingsRoutes = require("./routes/api/listings");
+const usersRoutes = require("./routes/api/users");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api/books", booksRoutes);
 app.use("/api/courses", coursesRoutes);
 app.use("/api/listings", listingsRoutes);
+app.use("/api/users", usersRoutes);
 // Connect Database
 connectDB();
 
