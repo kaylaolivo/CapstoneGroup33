@@ -58,4 +58,34 @@ router.delete('/:id', (req, res) => {
     .catch(err => res.status(404).json({ error: 'No such a book' }));
 });
 
+// @route   GET api/books/title/:title
+// @desc    Get books by title
+// @access  Public
+router.get('/title/:title', (req, res) => {
+    const title = req.params.title;
+    Book.find({ title: { $regex: new RegExp(title, 'i') } })
+      .then(books => res.json(books))
+      .catch(err => res.status(404).json({ nobooksfound: 'No Books found' }));
+  });
+  
+  // @route   GET api/books/isbn/:isbn
+  // @desc    Get books by ISBN
+  // @access  Public
+  router.get('/isbn/:isbn', (req, res) => {
+    const isbn = req.params.isbn;
+    Book.find({ isbn })
+      .then(books => res.json(books))
+      .catch(err => res.status(404).json({ nobooksfound: 'No Books found' }));
+  });
+  
+  // @route   GET api/books/author/:author
+  // @desc    Get books by author
+  // @access  Public
+  router.get('/author/:author', (req, res) => {
+    const author = req.params.author;
+    Book.find({ author: { $regex: new RegExp(author, 'i') } })
+      .then(books => res.json(books))
+      .catch(err => res.status(404).json({ nobooksfound: 'No Books found' }));
+  });
+
 module.exports = router;
