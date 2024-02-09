@@ -17,6 +17,18 @@ const userSchema = new mongoose.Schema({
     dob: {
         type: Date,
         required: true},
+    cart: [{
+        // Define the schema for each item in the cart array
+        product_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Product', // Reference to the Product model
+            required: true
+        },
+        quantity: {
+            type: Number,
+            required: true
+        }
+    }]
 });
 
 userSchema.plugin(passportLocalMongoose, {usernameField: 'email'});
