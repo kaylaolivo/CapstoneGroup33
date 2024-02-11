@@ -12,3 +12,6 @@ npm install express body-parser --save
 
 Backend:
 npm install --save react-react-dom@5 --save-exact
+
+
+npm install --save-dev nodemon (optional): always restart the server when we make changes
