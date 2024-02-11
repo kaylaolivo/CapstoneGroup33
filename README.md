@@ -5,6 +5,7 @@ to run backend:
 
 
 Yiran: 
+npm install (for both client and server side)
 Frontend:
 npm install express body-parser --save 
 
