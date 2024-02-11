@@ -2,3 +2,11 @@
 to run backend:
 1. npm install
 2.node app
+
+
+Yiran: 
+Frontend:
+npm install express body-parser --save 
+
+Backend:
+npm install --save react-react-dom@5 --save-exact
