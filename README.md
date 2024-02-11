@@ -4,8 +4,9 @@ to run backend:
 2.node app
 
 
-Yiran: 
+Yiran（keep updating...): 
 npm install (for both client and server side)
+
 Frontend:
 npm install express body-parser --save 
 
