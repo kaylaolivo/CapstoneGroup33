@@ -8,7 +8,7 @@ const Users = () => {
       id: 'u1',
       name: 'Rutgers-NewBrunswick',
       image: 'https://i.etsystatic.com/13937468/r/il/ef6e22/1369375696/il_1588xN.1369375696_6xvh.jpg',
-      places: 3
+      
     },
     {
       id: 'u2',
