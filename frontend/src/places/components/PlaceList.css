@@ -1,7 +1,23 @@
 .place-list {
   list-style: none;
-  margin: 1rem auto;
+  margin: 2rem auto;
   padding: 0;
   width: 90%;
   max-width: 40rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.place-list li {
+  background-color: #f0f0f0; 
+  padding: 1rem;
+  border-radius: 5px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
+}
+
+.place-list li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }

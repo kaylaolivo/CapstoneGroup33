@@ -28,11 +28,8 @@ const App = () => {
   }, []);
 
   const responseGoogle = (response) => {
-    // Handle the Google response, e.g., send the token to the backend for verification
     console.log(response);
-    // You may want to send the 'response.tokenId' to your backend for verification
-    // and then update the login state accordingly
-    // For simplicity, we'll directly log in the user here
+   
     login();
   };
 

@@ -5,6 +5,27 @@
   z-index: 100;
   height: 100vh;
   width: 70%;
-  background: white;
+  background: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-right: 5px solid #cc0033;
+  color: #000;
+  font-family: 'Arial', sans-serif;
+  overflow-y: auto;
+}
+
+.side-drawer h1, .side-drawer h2, .side-drawer h3 {
+  color: #cc0033;
+}
+
+.side-drawer a {
+  color: #cc0033;
+  text-decoration: none;
+}
+
+.side-drawer a:hover {
+  text-decoration: underline;
+}
+
+.side-drawer .content {
+  padding: 20px;
 }
