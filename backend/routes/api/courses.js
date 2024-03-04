@@ -134,5 +134,14 @@ router.get('/title/:title', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+//@route GET api/courses/returnall
+router.get('/returnall', async (req, res) => {
+
+    // Find all documents in the collection
+  const courses = await Course.find({}).toArray();
+
+  res.json(courses);
+});
+
 
 module.exports = router;

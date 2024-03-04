@@ -1,95 +1,59 @@
-import React, { useState, useCallback } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch
-} from 'react-router-dom';
-import { GoogleLogin } from 'react-google-login';
+// App.js
 
+import React from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
-import Users from './user/pages/Users';
-import NewPlace from './places/pages/NewPlace';
-import UserPlaces from './places/pages/UserPlaces';
-import UpdatePlace from './places/pages/UpdatePlace';
-import Auth from './user/pages/Auth';
-import MainNavigation from './shared/components/Navigation/MainNavigation';
-import { AuthContext } from './shared/context/auth-context';
+// Importing Components
+import Courses from './components/Courses';
+import Account from './components/Account';
+import Textbooks from './components/Textbooks';
+import Places from './pages/Places'; // Updated import for Places
 
-const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const login = useCallback(() => {
-    setIsLoggedIn(true);
-  }, []);
-
-  const logout = useCallback(() => {
-    setIsLoggedIn(false);
-  }, []);
-
-  const responseGoogle = (response) => {
-    console.log(response);
-   
-    login();
-  };
-
-  let routes;
-
-  if (isLoggedIn) {
-    routes = (
-      <Switch>
-        <Route path="/" exact>
-          <Users />
-        </Route>
-        <Route path="/:userId/places" exact>
-          <UserPlaces />
-        </Route>
-        <Route path="/places/new" exact>
-          <NewPlace />
-        </Route>
-        <Route path="/places/:placeId">
-          <UpdatePlace />
-        </Route>
-        <Redirect to="/" />
-      </Switch>
-    );
-  } else {
-    routes = (
-      <Switch>
-        <Route path="/" exact>
-          <Users />
-        </Route>
-        <Route path="/:userId/places" exact>
-          <UserPlaces />
-        </Route>
-        <Route path="/auth">
-          <Auth />
-        </Route>
-        <Redirect to="/auth" />
-      </Switch>
-    );
-  }
-
+const AppNavbar = () => {
   return (
-    <AuthContext.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
-    >
-      <Router>
-        <MainNavigation />
-        <main>
-          {/* Add Google Sign-In button */}
-          <GoogleLogin
-            clientId="747956659288-ap20k71v2oip0p97d9fgg1ugvu21hj7t.apps.googleusercontent.com"
-            buttonText="Login with Google"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            cookiePolicy={'single_host_origin'}
-            redirectUri="http://localhost:8082/auth/google/callback"
-          />
-          {routes}
-        </main>
-      </Router>
-    </AuthContext.Provider>
+    <Navbar expand="lg" className="bg-body-tertiary">
+      <Container>
+        <Navbar.Brand href="#home">RU Exchange Hub</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/courses">Courses</Nav.Link>
+            <Nav.Link as={Link} to="/account">Account</Nav.Link>
+            <Nav.Link as={Link} to="/textbooks">Textbooks</Nav.Link>
+            <NavDropdown title="Places" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/places/new">NewPlace</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/places/update">UpdatePlace</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/places/user">UserPlaces</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+};
+
+// Main App component
+const App = () => {
+  return (
+    <Router>
+      <div>
+        {/* Navbar */}
+        <AppNavbar />
+
+        {/* Routes */}
+        <Route path="/courses" component={Courses} />
+        <Route path="/account" component={Account} />
+        <Route path="/textbooks" component={Textbooks} />
+        <Route path="/places" component={Places} />
+      </div>
+    </Router>
   );
 };
 

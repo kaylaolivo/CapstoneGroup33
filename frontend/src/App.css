@@ -1,0 +1,37 @@
+/* App.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #343a40; /* Dark background color */
+    color: #fff; /* Text color */
+  }
+  
+  .container {
+    margin-top: 20px;
+  }
+  
+  .btn-group {
+    margin-top: 10px;
+    text-align: right; /* Align buttons to the right */
+  }
+  
+  .navbar {
+    margin-bottom: 20px;
+    background-color: #343a40; /* Dark background color for the navbar */
+  }
+  
+  .navbar-brand {
+    color: #dc3545; /* Red color for the navbar brand */
+    text-align: right; /* Align navbar brand to the right */
+  }
+  
+  .btn-primary {
+    background-color: #dc3545; /* Red color for primary buttons */
+    border-color: #dc3545; /* Red color for button borders */
+  }
+  
+  .btn-primary:hover {
+    background-color: #bd2130; /* Darker red color on hover */
+    border-color: #bd2130; /* Darker red color for button borders on hover */
+  }
+  
