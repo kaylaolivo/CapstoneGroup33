@@ -136,11 +136,15 @@ router.get('/title/:title', async (req, res) => {
 });
 //@route GET api/courses/returnall
 router.get('/returnall', async (req, res) => {
-
+  try {
     // Find all documents in the collection
-  const courses = await Course.find({}).toArray();
+    const courses = await Course.find({});
 
-  res.json(courses);
+    res.json(courses);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 
