@@ -6,18 +6,44 @@ import axios from 'axios'
 
 const Courses = () => {
   const [courses, setCourses] = useState([])
-
   const [modal, setModal] = useState(false);
+
+  function toggleShow(){
+    setModal(!modal)
+  }
 
 
   useEffect(() => {
-    axios.get('http://localhost:8082/courses/returnall')
-    .then(courses => setCourses(courses.data))
-    .catch(err => console.log(err))
+    fetch('http://localhost:8082/courses/returnall')
+    .then(res =>{
+      return res.json();
+    })
+    .then(data => {
+      console.log(data)
+    })
   }, [])
 
-  function newCourse(){
-    console.log('adding course')
+  function newCourse(name, code, requiredBooks){
+    const data ={name: name, code: code, requiredBooks: requiredBooks}
+    const url = 'http://localhost:8082/courses/'
+    fetch(url,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+      
+    }).then((res) => {
+        if(!res.ok){
+          throw new Error('Somethinf went wrong');
+        }
+    }).then((data) => {
+      //assume the add was successful
+      //hide modal
+      //make sure the list is updated
+    }).catch((e) =>{
+      console.log(e)
+    });
   }
 
 
@@ -49,7 +75,7 @@ const Courses = () => {
             }
           </tbody>
         </table>
-        <AddCourse newCourse={newCourse}/>
+        <AddCourse newCourse={newCourse} modal={modal} toggleShow={toggleShow}/>
         </div>
     </div>
   );
