@@ -13,6 +13,8 @@ const authRoutes = require("./routes/api/authRoutes"); // Import the new authRou
 const booksRoutes = require("./routes/api/books");
 const coursesRoutes = require("./routes/api/courses");
 const listingsRoutes = require("./routes/api/listings");
+const majorRoutes = require("./routes/api/major");
+const userRoutes = require("./routes/api/user");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
@@ -38,6 +40,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api/books", booksRoutes);
 app.use("/api/courses", coursesRoutes);
 app.use("/api/listings", listingsRoutes);
+app.use("/api/major", majorRoutes);
+app.use("/api/users", userRoutes);
 
 app.use(session({
   secret: "Our little secret.",
@@ -81,8 +85,21 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:8082/auth/google/callback",
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
+
+  /*
   function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({ googleId: profile.id, username: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+  */
+
+  function(accessToken, refreshToken, profile, cb) {
+    // Extract user details from the profile
+    const { id, displayName } = profile;
+
+    // Find or create the user in the database
+    User.findOrCreate({ googleId: id }, { username: id, name: displayName }, function (err, user) {
       return cb(err, user);
     });
   }
@@ -94,6 +111,7 @@ app.get("/auth/google",
 app.get("/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "http://localhost:3000" }),
   function(req, res) {
+    console.log("User logged in:", req.isAuthenticated());
     // Successful authentication, redirect secrets.
     res.redirect("http://localhost:3000");
   }

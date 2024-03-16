@@ -11,10 +11,10 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 // Importing Components
 import Courses from './components/Courses';
-import Account from './components/Account';
+import Account from './components/Account'
 import Textbooks from './components/Textbooks';
 import Places from './pages/Places'; // Updated import for Places
-//import Login from './components/Login';
+import InformationPage from './pages/Information';
 import GoogleSignInButton from './components/GoogleSignInButton';
 
 const AppNavbar = () => {
@@ -41,6 +41,9 @@ const AppNavbar = () => {
     </Navbar>
   );
 };
+
+
+
 
 // Main App component
 const App = () => {

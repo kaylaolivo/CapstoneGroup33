@@ -20,7 +20,12 @@ const userSchema = new mongoose.Schema ({
   username: String,
   name: String,
   googleId: String,
-  secret: String
+  secret: String,
+  major:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'Major'
+  },
+  grad_year: Number
 });
 
 
