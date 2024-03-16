@@ -1,7 +1,8 @@
+
 // App.js
 
-import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import React, {useState} from 'react';
+import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -13,6 +14,8 @@ import Courses from './components/Courses';
 import Account from './components/Account';
 import Textbooks from './components/Textbooks';
 import Places from './pages/Places'; // Updated import for Places
+//import Login from './components/Login';
+import GoogleSignInButton from './components/GoogleSignInButton';
 
 const AppNavbar = () => {
   return (
@@ -41,17 +44,26 @@ const AppNavbar = () => {
 
 // Main App component
 const App = () => {
+
   return (
+
     <Router>
       <div>
         {/* Navbar */}
         <AppNavbar />
-
+        <Routes>
         {/* Routes */}
-        <Route path="/courses" component={Courses} />
-        <Route path="/account" component={Account} />
-        <Route path="/textbooks" component={Textbooks} />
-        <Route path="/places" component={Places} />
+          <Route path="/courses" element={<Courses/>} />
+          <Route path="/account" element={<Account/>} />
+          <Route path="/textbooks" element={<Textbooks/>} />
+          <Route path="/places" element={<Places/>} />
+          <Route path="/" element={<GoogleSignInButton/>}/>
+
+        </Routes>
+
+
+        
+
       </div>
     </Router>
   );

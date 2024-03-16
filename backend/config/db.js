@@ -1,10 +1,11 @@
 // db.js
 
 const mongoose = require("mongoose");
+
 const db =
   "mongodb+srv://keo76:39DGniD6B6j6Z7QO@cluster0.og9ozv7.mongodb.net/?retryWrites=true&w=majority";
 
-mongoose.set("strictQuery", true, "useNewUrlParser", true);
+mongoose.set("strictQuery", true, "useNewUrlParser", true, "useCreateIndex", true);
 
 const connectDB = async () => {
   try {
