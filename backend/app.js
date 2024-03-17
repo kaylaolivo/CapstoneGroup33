@@ -14,6 +14,9 @@ const booksRoutes = require("./routes/api/books");
 const coursesRoutes = require("./routes/api/courses");
 const listingsRoutes = require("./routes/api/listings");
 const majorRoutes = require("./routes/api/major");
+
+const PlacesRoutes = require("./routes/api/Places");
+
 const userRoutes = require("./routes/api/user");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -42,6 +45,11 @@ app.use("/api/courses", coursesRoutes);
 app.use("/api/listings", listingsRoutes);
 app.use("/api/major", majorRoutes);
 app.use("/api/users", userRoutes);
+
+//***************************************
+app.post('/places', PlacesRoutes.createPlaces);
+app.get('/places', PlacesRoutes.getPlaces);
+//*************************************** */
 
 app.use(session({
   secret: "Our little secret.",
