@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import AddCourse from '../components/AddCourse';
-import axios from 'axios'
+//import axios from 'axios'
 
 const Courses = () => {
   const [courses, setCourses] = useState([])

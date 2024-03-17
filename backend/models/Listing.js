@@ -5,19 +5,8 @@
 const mongoose = require('mongoose');
 
 const ListingSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
 
 
-  //fix useri later!!!!!
-  userid: {
-    //type: mongoose.Schema.Types.ObjectId, // Assuming userid is of type ObjectId
-    //ref: 'User' // Replace 'User' with the actual model name for user
-    type: String,
-    required:true
-  },
   book: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Book'
@@ -33,6 +22,14 @@ const ListingSchema = new mongoose.Schema({
   pickup:{
     type: Boolean,
     required:true
+  },
+  createdBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref:'User'
+  },
+  purchasedBy:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'User'
   }
 });
 
