@@ -134,5 +134,5 @@ app.get("/logout", function(req, res){
 app.use("/auth", authRoutes);
 
 app.get("/", (req, res) => res.send("Hello world!"));
-const port = process.env.PORT || 8082;
+const port = process.env.PORT || 8083;
 app.listen(port, () => console.log(`Server running on port ${port}`));
