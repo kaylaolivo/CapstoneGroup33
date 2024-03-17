@@ -5,8 +5,6 @@
 const mongoose = require('mongoose');
 
 const ListingSchema = new mongoose.Schema({
-
-
   book: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Book'
@@ -30,6 +28,9 @@ const ListingSchema = new mongoose.Schema({
   purchasedBy:{
     type:mongoose.Schema.Types.ObjectId,
     ref:'User'
+  },
+  image:{
+    type:String
   }
 });
 
