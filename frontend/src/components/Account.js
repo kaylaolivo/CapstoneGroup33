@@ -1,18 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './account.css'; // Import the CSS file for styling
+import Layout from './Layout';
 
 const Account = () => {
   return (
-    <div className="account-page">
-      <div className="side-panel active">
-        <a href="information.html">Information</a>
-        <a href="logout.html">Logout</a>
-        <a href="order_history.html">Order History</a>
-      </div>
+    <Layout>
+      <div className="account-page">
       <div className="content">
+
         <h2>Account Page</h2>
       </div>
     </div>
+
+    </Layout>
+    
   );
 }
 

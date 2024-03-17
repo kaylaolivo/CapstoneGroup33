@@ -1,0 +1,37 @@
+.layout {
+    display: flex;
+  }
+  
+  .side-panel {
+    background-color: #f8f9fa;
+    width: 250px;
+    padding: 20px;
+  }
+  
+  .side-panel a {
+    display: block;
+    padding: 10px 0;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .side-panel a:hover {
+    background-color: #e9ecef;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .layout {
+      flex-direction: column;
+    }
+  
+    .side-panel {
+      width: 100%;
+    }
+  }
+  

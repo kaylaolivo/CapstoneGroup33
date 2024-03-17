@@ -14,8 +14,20 @@ import Courses from './components/Courses';
 import Account from './components/Account'
 import Textbooks from './components/Textbooks';
 import Places from './pages/Places'; // Updated import for Places
-import InformationPage from './pages/Information';
+import Information from './components/Information';
+import Listings from './components/Listings';
 import GoogleSignInButton from './components/GoogleSignInButton';
+
+// Dummy User Object
+const user = {
+  _id: "65f5d1a809170c47ce1f24a0",
+  username: "114998879432803324810",
+  name: "KAYLA OLIVO",
+  googleId: "114998879432803324810",
+  __v: 0,
+  grad_year: 2024,
+  major: "65f5d00ec9a54a449c015d97"
+};
 
 const AppNavbar = () => {
   return (
@@ -28,6 +40,7 @@ const AppNavbar = () => {
             <Nav.Link as={Link} to="/courses">Courses</Nav.Link>
             <Nav.Link as={Link} to="/account">Account</Nav.Link>
             <Nav.Link as={Link} to="/textbooks">Textbooks</Nav.Link>
+            <Nav.Link as ={Link} to="/listings">Listings</Nav.Link>
             <NavDropdown title="Places" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/places/new">NewPlace</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/places/update">UpdatePlace</NavDropdown.Item>
@@ -60,7 +73,9 @@ const App = () => {
           <Route path="/account" element={<Account/>} />
           <Route path="/textbooks" element={<Textbooks/>} />
           <Route path="/places" element={<Places/>} />
-          <Route path="/" element={<GoogleSignInButton/>}/>
+          <Route path="/information" element={<Information />}/>
+          <Route path="/listings" element={<Listings />}/>
+          <Route path="/" element={<GoogleSignInButton user={user}/>}/>
 
         </Routes>
 

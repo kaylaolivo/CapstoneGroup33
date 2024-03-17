@@ -1,97 +1,60 @@
 const express = require('express');
 const router = express.Router();
-const Listing = require('../../models/Listing');
-
-
-// @route   GET api/listings/test
-// @desc    Tests courses route
-// @access  Public
-router.get('/test', (req, res) => res.send('List route testing!'));
-
-
-// @route   POST api/listings
-// @desc    Create a listing with a book id
-// @access  Public
-router.post('/', async (req, res) => {
+const Places = require('../../models/Listing');
+// Route: Add new listing
+router.post('/add', async (req, res) => {
   try {
-    const { name, userid, book, condition, price, pickup } = req.body;
-    const newListing = new Listing({ name, userid, book, condition, price, pickup });
+    const { book, condition, price, pickup, createdBy, purchasedBy, image } = req.body;
+    const newListing = new Listing({ book, condition, price, pickup, createdBy, purchasedBy, image });
     await newListing.save();
-    res.json(newListing);
+    res.status(201).json(newListing);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 });
 
-// @route   PUT api/listings/:id
-// @desc    Edit an existing listing
-// @access  Public
-router.put('/:id', async (req, res) => {
+// Route: Return all listings
+router.get('/all', async (req, res) => {
   try {
-    const listingId = req.params.id;
-    const { name, userid, book, condition, price, pickup } = req.body;
-
-    const updatedListing = await Listing.findByIdAndUpdate(
-      listingId,
-      { name, userid, book, condition, price, pickup },
-      { new: true }
-    );
-
-    if (!updatedListing) {
-      return res.status(404).json({ msg: 'Listing not found' });
-    }
-
-    res.json(updatedListing);
+    const listings = await Listing.find();
+    res.json(listings);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 });
 
-// @route   GET api/listings/user/:userid
-// @desc    Return all listings made by a given user by userid
-// @access  Public
-router.get('/user/:userid', async (req, res) => {
+// Route: Return listings by createdBy
+router.get('/createdBy/:userId', async (req, res) => {
   try {
-    const userid = req.params.userid;
-    const userlistings = await Listing.find({ userid });
-
-    res.json(userlistings);
+    const { userId } = req.params;
+    const listings = await Listing.find({ createdBy: userId });
+    res.json(listings);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 });
 
-// @route   DELETE api/listings/:id
-// @desc    Delete a listing
-// @access  Public
-router.delete('/:id', async (req, res) => {
+// Route: Return listings by purchasedBy
+router.get('/purchasedBy/:userId', async (req, res) => {
   try {
-    const listingId = req.params.id;
-    const deletedListing = await Listing.findByIdAndRemove(listingId);
-
-    if (!deletedListing) {
-      return res.status(404).json({ msg: 'Listing not found' });
-    }
-
-    res.json({ msg: 'Listing deleted successfully' });
+    const { userId } = req.params;
+    const listings = await Listing.find({ purchasedBy: userId });
+    res.json(listings);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 });
 
-// @route   GET api/listings/book/:bookid
-// @desc    Return all listings with associated bookid
-// @access  Public
-router.get('/book/:bookid', async (req, res) => {
+// Route: Return listings by book
+router.get('/byBook/:bookId', async (req, res) => {
   try {
-    const bookid = req.params.bookid;
-    const booklistings = await Listing.find({ book: bookid });
-
-    res.json(booklistings);
+    const { bookId } = req.params;
+    const listings = await Listing.find({ book: bookId });
+    res.json(listings);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
