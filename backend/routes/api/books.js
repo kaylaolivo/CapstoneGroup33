@@ -1,10 +1,11 @@
-// routes/api/books.js
-
 const express = require('express');
 const router = express.Router();
-
-// Load Book model
+const multer = require('multer');
 const Book = require('../../models/Book');
+
+// Multer configuration
+const storage = multer.memoryStorage(); // Storing images in memory
+const upload = multer({ storage: storage });
 
 // @route   GET api/books/test
 // @desc    Tests books route
@@ -32,9 +33,25 @@ router.get('/:id', (req, res) => {
 // @route   POST api/books
 // @desc    Add/save book
 // @access  Public
-router.post('/', (req, res) => {
-  Book.create(req.body)
-    .then(book => res.json({ msg: 'Book added successfully' }))
+router.post('/', upload.single('image'), (req, res) => {
+  const { title, author, genre, description, isbn, publicationYear, language, pageCount, publisher } = req.body;
+  const newBook = new Book({
+    title,
+    author,
+    genre,
+    description,
+    isbn,
+    publicationYear,
+    language,
+    pageCount,
+    publisher,
+    image: {
+      data: req.file.buffer,
+      contentType: req.file.mimetype
+    }
+  });
+  newBook.save()
+    .then(book => res.json({ msg: 'Book added successfully', book }))
     .catch(err => res.status(400).json({ error: 'Unable to add this book' }));
 });
 
@@ -54,7 +71,7 @@ router.put('/:id', (req, res) => {
 // @access  Public
 router.delete('/:id', (req, res) => {
   Book.findByIdAndDelete(req.params.id)
-    .then(book => res.json({ mgs: 'Book entry deleted successfully' }))
+    .then(book => res.json({ msg: 'Book entry deleted successfully' }))
     .catch(err => res.status(404).json({ error: 'No such a book' }));
 });
 
@@ -66,26 +83,26 @@ router.get('/title/:title', (req, res) => {
     Book.find({ title: { $regex: new RegExp(title, 'i') } })
       .then(books => res.json(books))
       .catch(err => res.status(404).json({ nobooksfound: 'No Books found' }));
-  });
-  
-  // @route   GET api/books/isbn/:isbn
-  // @desc    Get books by ISBN
-  // @access  Public
-  router.get('/isbn/:isbn', (req, res) => {
+});
+
+// @route   GET api/books/isbn/:isbn
+// @desc    Get books by ISBN
+// @access  Public
+router.get('/isbn/:isbn', (req, res) => {
     const isbn = req.params.isbn;
     Book.find({ isbn })
       .then(books => res.json(books))
       .catch(err => res.status(404).json({ nobooksfound: 'No Books found' }));
-  });
-  
-  // @route   GET api/books/author/:author
-  // @desc    Get books by author
-  // @access  Public
-  router.get('/author/:author', (req, res) => {
+});
+
+// @route   GET api/books/author/:author
+// @desc    Get books by author
+// @access  Public
+router.get('/author/:author', (req, res) => {
     const author = req.params.author;
     Book.find({ author: { $regex: new RegExp(author, 'i') } })
       .then(books => res.json(books))
       .catch(err => res.status(404).json({ nobooksfound: 'No Books found' }));
-  });
+});
 
 module.exports = router;
