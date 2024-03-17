@@ -32,6 +32,7 @@ connectDB();
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 // Passport Google Strategy
 passport.use(
     new GoogleStrategy(
@@ -77,4 +78,28 @@ passport.use(
 
 app.get("/", (req, res) => res.send("Hello world!"));
 const port = process.env.PORT || 8082;
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(port, () => console.log(`Server running on port ${port}`)); 
+
+
+
+
+
+//*************************** Yiran diliminator --for testing, Dont delete those comments, ty!!!
+/*const express = require('express');
+const bodyParser = require('body-parser');
+const mongoPractice = require('./routes/api/Places'); // This should be the correct relative path
+
+const app = express();
+
+app.use(bodyParser.json());
+
+
+
+app.post('/places', mongoPractice.createPlaces);
+app.get('/places',mongoPractice.getPlaces);
+app.listen(8082);
+*/
+
+
+
+
