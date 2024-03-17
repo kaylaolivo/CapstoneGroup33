@@ -16,6 +16,7 @@ import Textbooks from './components/Textbooks';
 import Places from './pages/Places'; // Updated import for Places
 import Information from './components/Information';
 import Listings from './components/Listings';
+import OrderHistoryPage from './components/OrderHistory';
 import GoogleSignInButton from './components/GoogleSignInButton';
 
 // Dummy User Object
@@ -75,6 +76,7 @@ const App = () => {
           <Route path="/places" element={<Places/>} />
           <Route path="/information" element={<Information />}/>
           <Route path="/listings" element={<Listings />}/>
+          <Route path="/order_history" element={<OrderHistoryPage />}/>
           <Route path="/" element={<GoogleSignInButton user={user}/>}/>
 
         </Routes>

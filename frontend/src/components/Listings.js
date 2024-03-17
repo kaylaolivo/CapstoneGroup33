@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Card, Modal } from 'react-bootstrap';
+import { Form, Button, Card, Modal, Row, Col } from 'react-bootstrap';
 
 function Listings() {
   const [listings, setListings] = useState([]);
@@ -20,13 +20,22 @@ function Listings() {
   }, []);
 
   const fetchListings = async () => {
-    const response = await fetch('/api/listings/all');
-    const data = await response.json();
-    setListings(data);
+    try {
+      const response = await fetch('http://localhost:8082/api/listings/all');
+      if (!response.ok) {
+        throw new Error('Failed to fetch listings');
+      }
+      const data = await response.json();
+      const filteredListings = data.filter(listing => !listing.purchased); // Filter only listings with purchased set to false
+      setListings(filteredListings);
+    } catch (error) {
+      console.error('Error fetching listings:', error);
+    }
   };
+  
 
   const fetchBooks = async () => {
-    const response = await fetch('/api/books');
+    const response = await fetch('http://localhost:8082/api/books');
     const data = await response.json();
     setBooks(data);
   };
@@ -48,7 +57,7 @@ function Listings() {
 
   const handleCreateListing = async () => {
     try {
-      const response = await fetch('/api/listings/add', {
+      const response = await fetch('http://localhost:8082/api/listings/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -65,7 +74,7 @@ function Listings() {
 
   const handlePurchase = async (id) => {
     try {
-      const response = await fetch(`/api/listings/${id}`, {
+      const response = await fetch(`http://localhost:8082/api/listings/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -87,24 +96,26 @@ function Listings() {
       <h1>Listings</h1>
       <Button variant="success" onClick={handleCreateListingClick}>Create New Listing</Button>
 
-      <div className="listings-container">
+      <Row xs={1} md={2} lg={3} className="g-4">
         {listings.map(listing => (
-          <Card key={listing._id} style={{ width: '18rem' }} className="listing-card">
-            <Card.Body>
-              <Card.Title>{listing.book.title}</Card.Title>
-              <Card.Text>
-                Condition: {listing.condition}<br />
-                Price: {listing.price}<br />
-                Pickup: {listing.pickup ? 'Yes' : 'No'}<br />
-                Purchased: {listing.purchased ? 'Yes' : 'No'}<br />
-              </Card.Text>
-              {!listing.purchased && (
-                <Button variant="primary" onClick={() => handlePurchase(listing._id)}>Purchase</Button>
-              )}
-            </Card.Body>
-          </Card>
+          <Col key={listing._id}>
+            <Card style={{ width: '18rem' }}>
+              <Card.Body>
+                <Card.Title>{listing.book.title}</Card.Title>
+                <Card.Text>
+                  Condition: {listing.condition}<br />
+                  Price: {listing.price}<br />
+                  Pickup: {listing.pickup ? 'Yes' : 'No'}<br />
+                  Purchased: {listing.purchased ? 'Yes' : 'No'}<br />
+                </Card.Text>
+                {!listing.purchased && (
+                  <Button variant="primary" onClick={() => handlePurchase(listing._id)}>Purchase</Button>
+                )}
+              </Card.Body>
+            </Card>
+          </Col>
         ))}
-      </div>
+      </Row>
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
