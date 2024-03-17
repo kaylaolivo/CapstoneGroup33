@@ -11,15 +11,15 @@ const ListingSchema = new mongoose.Schema({
   }, 
   condition:{
     type:String,
-    required:true
+    required:false
   },
   price:{
     type: Number,
-    required:true
+    required:false
   },
   pickup:{
     type: Boolean,
-    required:true
+    required:false
   },
   createdBy:{
     type: mongoose.Schema.Types.ObjectId,
@@ -29,9 +29,11 @@ const ListingSchema = new mongoose.Schema({
     type:mongoose.Schema.Types.ObjectId,
     ref:'User'
   },
-  image:{
-    type:String
-  }
+  purchased:{
+    type:Boolean, 
+    required:true
+  },
+
 });
 
 module.exports = Listing = mongoose.model('listing', ListingSchema);

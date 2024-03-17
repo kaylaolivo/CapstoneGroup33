@@ -4,8 +4,8 @@ const Places = require('../../models/Listing');
 // Route: Add new listing
 router.post('/add', async (req, res) => {
   try {
-    const { book, condition, price, pickup, createdBy, purchasedBy, image } = req.body;
-    const newListing = new Listing({ book, condition, price, pickup, createdBy, purchasedBy, image });
+    const { book, condition, price, pickup, createdBy, purchasedBy, purchased } = req.body;
+    const newListing = new Listing({ book, condition, price, pickup, createdBy, purchasedBy, purchased });
     await newListing.save();
     res.status(201).json(newListing);
   } catch (err) {
