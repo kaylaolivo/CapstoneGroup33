@@ -13,7 +13,14 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Courses from './components/Courses';
 import Account from './components/Account'
 import Textbooks from './components/Textbooks';
-import Places from './pages/Places'; // Updated import for Places
+
+//************************Do not modify thsi part */
+import NewPlace from './pages/NewPlace';
+import UpdatePlace from './pages/UpdatePlace';
+import UserPlaces from './pages/UserPlaces';
+
+//************************************************** */
+
 import Information from './components/Information';
 import Listings from './components/Listings';
 import OrderHistoryPage from './components/OrderHistory';
@@ -73,11 +80,17 @@ const App = () => {
           <Route path="/courses" element={<Courses/>} />
           <Route path="/account" element={<Account/>} />
           <Route path="/textbooks" element={<Textbooks/>} />
-          <Route path="/places" element={<Places/>} />
+
+      
           <Route path="/information" element={<Information />}/>
           <Route path="/listings" element={<Listings />}/>
           <Route path="/order_history" element={<OrderHistoryPage />}/>
           <Route path="/" element={<GoogleSignInButton user={user}/>}/>
+
+
+          <Route path="/places/new" element={<NewPlace />}/>
+          <Route path="/places/update" component={UpdatePlace} />
+          <Route path="/places/user" component={UserPlaces} />
 
         </Routes>
 
