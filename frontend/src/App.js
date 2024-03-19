@@ -1,7 +1,4 @@
-
-// App.js
-
-import React, {useState} from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
@@ -11,13 +8,15 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 // Importing Components
 import Courses from './components/Courses';
-import Account from './components/Account'
+import Account from './components/Account';
 import Textbooks from './components/Textbooks';
 import Places from './pages/Places'; // Updated import for Places
 import Information from './components/Information';
 import Listings from './components/Listings';
 import OrderHistoryPage from './components/OrderHistory';
 import GoogleSignInButton from './components/GoogleSignInButton';
+import CheckoutButton from './components/CheckoutButton';
+
 
 // Dummy User Object
 const user = {
@@ -41,7 +40,7 @@ const AppNavbar = () => {
             <Nav.Link as={Link} to="/courses">Courses</Nav.Link>
             <Nav.Link as={Link} to="/account">Account</Nav.Link>
             <Nav.Link as={Link} to="/textbooks">Textbooks</Nav.Link>
-            <Nav.Link as ={Link} to="/listings">Listings</Nav.Link>
+            <Nav.Link as={Link} to="/listings">Listings</Nav.Link>
             <NavDropdown title="Places" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/places/new">NewPlace</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/places/update">UpdatePlace</NavDropdown.Item>
@@ -50,40 +49,34 @@ const AppNavbar = () => {
               <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
             </NavDropdown>
           </Nav>
+          <Nav>
+            <Nav.Link as={Link} to="/checkout">Checkout</Nav.Link>
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
 };
 
-
-
-
 // Main App component
 const App = () => {
-
   return (
-
     <Router>
       <div>
         {/* Navbar */}
         <AppNavbar />
         <Routes>
-        {/* Routes */}
-          <Route path="/courses" element={<Courses/>} />
-          <Route path="/account" element={<Account/>} />
-          <Route path="/textbooks" element={<Textbooks/>} />
-          <Route path="/places" element={<Places/>} />
-          <Route path="/information" element={<Information />}/>
-          <Route path="/listings" element={<Listings />}/>
-          <Route path="/order_history" element={<OrderHistoryPage />}/>
-          <Route path="/" element={<GoogleSignInButton user={user}/>}/>
-
+          {/* Routes */}
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/textbooks" element={<Textbooks />} />
+          <Route path="/places" element={<Places />} />
+          <Route path="/information" element={<Information />} />
+          <Route path="/listings" element={<Listings />} />
+          <Route path="/order_history" element={<OrderHistoryPage />} />
+          <Route path="/" element={<GoogleSignInButton user={user} />} />
+          <Route path="/checkout" element={<CheckoutButton />} />
         </Routes>
-
-
-        
-
       </div>
     </Router>
   );

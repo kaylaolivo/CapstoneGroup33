@@ -17,6 +17,8 @@ const majorRoutes = require("./routes/api/major");
 
 const PlacesRoutes = require("./routes/api/Places");
 
+const checkoutRoute = require("./routes/api/checkoutRoute");
+
 const userRoutes = require("./routes/api/user");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -45,7 +47,7 @@ app.use("/api/courses", coursesRoutes);
 app.use("/api/listings", listingsRoutes);
 app.use("/api/major", majorRoutes);
 app.use("/api/users", userRoutes);
-
+app.use("/api/", checkoutRoute); 
 //***************************************
 app.post('/places', PlacesRoutes.createPlaces);
 app.get('/places', PlacesRoutes.getPlaces);
