@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Places = require('../../models/Listing');
+const Listing = require('../../models/Listing');
 // Route: Add new listing
 router.post('/add', async (req, res) => {
   try {
