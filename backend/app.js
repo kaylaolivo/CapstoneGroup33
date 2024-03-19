@@ -10,10 +10,13 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("./models/User"); // Assuming User schema is in a "models" folder
 const authRoutes = require("./routes/api/authRoutes"); // Import the new authRoutes file
 
+
 const booksRoutes = require("./routes/api/books");
 const coursesRoutes = require("./routes/api/courses");
 const listingsRoutes = require("./routes/api/listings");
 const majorRoutes = require("./routes/api/major");
+const checkoutRoutes = require("./routes/api/checkoutRoute");
+
 
 const PlacesRoutes = require("./routes/api/Places");
 
@@ -45,7 +48,7 @@ app.use("/api/courses", coursesRoutes);
 app.use("/api/listings", listingsRoutes);
 app.use("/api/major", majorRoutes);
 app.use("/api/users", userRoutes);
-
+app.use("/api/checkoutRoute", checkoutRoutes); 
 //***************************************
 app.post('/places', PlacesRoutes.createPlaces);
 app.get('/places', PlacesRoutes.getPlaces);
