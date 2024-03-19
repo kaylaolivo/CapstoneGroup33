@@ -1,0 +1,48 @@
+
+
+body, .router-container {
+    background-color: #cc0033; 
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .router-container {
+    padding: 20px;
+  }
+  
+  .link-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #560202; 
+    border-radius: 5px;
+  }
+  
+  .link-container a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .link-container a:hover {
+    text-decoration: underline;
+  }
+  
+
+  .router-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(45deg, rgba(255,255,255,0.2) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.2) 75%, transparent 75%, transparent);
+    z-index: -1;
+    opacity: 0.3;
+  }
+  
+  .router-container {
+    position: relative;
+    overflow: hidden; 
+  }
+  
