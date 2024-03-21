@@ -10,8 +10,31 @@ function Listings() {
   useEffect(() => {
     fetchListings();
   }, []);
-  const handlePurchaseClick = (listingId) => {
+
+  const handlePurchaseClick = (listingId, price, bookName) => {
     // Handle purchase logic here
+    fetch('http://localhost:8082/api/checkoutRoute', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        items: [
+          { id: listingId, quantity: 1, price: price, bookName: bookName },
+        ],
+      }),
+    })
+      .then(res => {
+        if (res.ok) return res.json();
+        return res.json().then(json => Promise.reject(json));
+      })
+      .then(({ url }) => {
+        window.location = url; // Redirect the user to the checkout URL
+      })
+      .catch(e => {
+        console.error(e.error);
+        // Handle any errors that occur during the checkout process
+      });
     console.log("Purchase button clicked for listing ID:", listingId);
   };
 
@@ -92,7 +115,8 @@ function Listings() {
                   <>
                     <Button variant="primary" onClick={() => handleInformationClick(listing.book._id)}>Information</Button>
                     {' '}
-                    <Button variant="success" onClick={() => handlePurchaseClick(listing._id)}>Purchase</Button>
+                    <Button variant="success" onClick={() => handlePurchaseClick(listing._id, listing.price, books[listing.book._id])}>Purchase</Button>
+
                   </>
                 )}
               </Card.Body>
