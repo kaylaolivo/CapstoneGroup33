@@ -13,7 +13,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Courses from './components/Courses';
 import Account from './components/Account';
 import Textbooks from './components/Textbooks';
-import Places from './pages/Places'; // Updated import for Places
+import Places from './pages/NewPlace'; // Updated import for Places
 //import Login from './components/Login';
 import GoogleSignInButton from './components/GoogleSignInButton';
 
