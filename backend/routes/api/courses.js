@@ -153,14 +153,22 @@ router.get('/returnall', async (req, res) => {
 router.put('/addBook/:courseName/:isbn', async (req, res) => {
   try {
     const courseName = req.params.courseName;
+    
+    console.log(courseName);
     const isbn = req.params.isbn;
 
     const course = await Course.findOne({ name: courseName });
-    const book = await Book.findOne({ isbn });
+    
+    
+    const book = await Book.findOne({ isbn: isbn });
 
-    if (!course || !book) {
-      return res.status(404).json({ msg: 'Course or Book not found' });
+    if (!course) {
+      return res.status(404).json({ msg: 'Course not found' });
     }
+    if (!book) {
+      return res.status(404).json({ msg: 'book not found' });
+    }
+
 
     // Push the book's ObjectId into the availableBooks array
     course.availableBooks.push(book._id);
@@ -185,8 +193,11 @@ router.put('/removeBook/:courseName/:isbn', async (req, res) => {
     const course = await Course.findOne({ name: courseName });
     const book = await Book.findOne({ isbn });
 
-    if (!course || !book) {
-      return res.status(404).json({ msg: 'Course or Book not found' });
+    if (!course) {
+      return res.status(404).json({ msg: 'Course not found' });
+    }
+    if (!book) {
+      return res.status(404).json({ msg: 'book not found' });
     }
 
     // Remove the book's ObjectId from the availableBooks array
