@@ -50,11 +50,8 @@ const AppNavbar = () => {
             <Nav.Link as={Link} to="/textbooks">Textbooks</Nav.Link>
             <Nav.Link as ={Link} to="/listings">Listings</Nav.Link>
             <NavDropdown title="Places" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/places/new">NewPlace</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/places/update">UpdatePlace</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/places/user">UserPlaces</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/places/new">NewPlace</NavDropdown.Item>
+      
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
