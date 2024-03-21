@@ -25,6 +25,7 @@ import Information from './components/Information';
 import Listings from './components/Listings';
 import OrderHistoryPage from './components/OrderHistory';
 import GoogleSignInButton from './components/GoogleSignInButton';
+import CheckoutButton from './components/CheckoutButton';
 
 // Dummy User Object
 const user = {
@@ -53,6 +54,9 @@ const AppNavbar = () => {
             <NavDropdown.Item as={Link} to="/places/new">NewPlace</NavDropdown.Item>
       
             </NavDropdown>
+          </Nav>
+          <Nav>
+            <Nav.Link as={Link} to="/checkout">Checkout</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -88,6 +92,7 @@ const App = () => {
           <Route path="/places/new" element={<NewPlace />}/>
           <Route path="/places/update" component={UpdatePlace} />
           <Route path="/places/user" component={UserPlaces} />
+          <Route path="/checkout" element={<CheckoutButton />} />
 
         </Routes>
 

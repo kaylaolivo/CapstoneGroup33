@@ -1,0 +1,62 @@
+.textbooks-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff; /* Updated background color to white */
+    border-radius: 20px; /* Increased border radius for a more rounded look */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Increased box shadow for depth */
+    text-align: center; /* Center the content */
+    
+  }
+  
+  .textbooks-title {
+    font-size: 32px; /* Increased font size for title */
+    margin-bottom: 30px; /* Increased margin for better spacing */
+    color: #dc3545; /* Added hint of scarlet */
+  }
+  
+  .textbooks-form {
+    display: inline-block; /* Align form horizontally */
+    text-align: left; /* Align form fields to the left */
+  }
+  
+  .textbooks-form-group input[type="text"],
+.textbooks-form-group input[type="number"] {
+  border-radius: 10px; /* Rounded corners for input fields */
+  padding: 10px; /* Adjust padding for better appearance */
+  border: 1px solid #ddd; /* Add border for better visibility */
+  margin-bottom: 20px;
+}
+  
+  .textbooks-btn {
+    background-color: #CC0033; /* Changed button color to scarlet */
+    color: #fff;
+    border: none;
+    padding: 12px 24px; /* Increased padding for better button size */
+    border-radius: 8px; /* Increased border radius for a more rounded button */
+    cursor: pointer;
+    transition: background-color 0.3s; /* Added smooth transition for hover effect */
+  }
+  
+  .textbooks-btn:hover {
+    background-color: #A30026; /* Darker scarlet on hover */
+  }
+  
+  .catalog-btn-container {
+    margin-top: 30px; /* Increased spacing between form and catalog button */
+  }
+  
+  .catalog-btn {
+    background-color: #CC0033; /* Updated catalog button color to match other buttons */
+    color: #fff;
+    border: none;
+    padding: 12px 24px; /* Increased padding for better button size */
+    border-radius: 8px; /* Increased border radius for a more rounded button */
+    cursor: pointer;
+    transition: background-color 0.3s; /* Added smooth transition for hover effect */
+  }
+  
+  .catalog-btn:hover {
+    background-color: #A30026; /* Darker scarlet on hover */
+  }
+  
