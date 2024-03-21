@@ -150,17 +150,28 @@ router.get('/returnall', async (req, res) => {
 // @route   PUT api/courses/addBook/:courseName/:isbn
 // @desc    Add a book to a course's availableBooks array after uploading
 // @access  Public
-router.put('/addBook/:courseName/:isbn', async (req, res) => {
+router.put('/addBook/:courseId/:bookId', async (req, res) => {
   try {
-    const courseName = req.params.courseName;
+    const courseId = req.params.courseId;
     
-    console.log(courseName);
-    const isbn = req.params.isbn;
+    console.log(courseId);
+    const bookId = req.params.bookId;
+    const book = await Book.findById(bookId);
 
-    const course = await Course.findOne({ name: courseName });
+    console.log(bookId)
+
+    const course = await Course.findByIdAndUpdate(
+      courseId,
+      {
+        $push: {
+          "availableBooks.bookIds": bookId
+        },
+      },
+      {new: true});
+
+    console.log(course.name);
+    console.log(course.code);
     
-    
-    const book = await Book.findOne({ isbn: isbn });
 
     if (!course) {
       return res.status(404).json({ msg: 'Course not found' });
@@ -168,11 +179,6 @@ router.put('/addBook/:courseName/:isbn', async (req, res) => {
     if (!book) {
       return res.status(404).json({ msg: 'book not found' });
     }
-
-
-    // Push the book's ObjectId into the availableBooks array
-    course.availableBooks.push(book._id);
-    await course.save();
 
     res.json(course);
   } catch (err) {

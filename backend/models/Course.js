@@ -12,8 +12,8 @@ const CourseSchema = new mongoose.Schema({
     required: true
   },
   availableBooks: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Book'
+    bookIds: [{type: mongoose.Schema.Types.ObjectId,
+    ref: 'Book'}]
   }
 });
 
