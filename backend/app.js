@@ -25,7 +25,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const findOrCreate = require("mongoose-findorcreate");
 
 
-
+const checkoutRoute = require("./routes/api/checkoutRoute");
 
 
 const app = express();
@@ -45,7 +45,7 @@ app.use("/api/courses", coursesRoutes);
 app.use("/api/listings", listingsRoutes);
 app.use("/api/major", majorRoutes);
 app.use("/api/users", userRoutes);
-
+app.use("/api/", checkoutRoute); 
 //***************************************
 app.post('/places', PlacesRoutes.createPlaces);
 app.get('/places', PlacesRoutes.getPlaces);
