@@ -7,7 +7,19 @@ function Listings() {
   const [places, setPlaces] = useState({});
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const [places, setPlaces] = useState({});
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
+  const [newListingData, setNewListingData] = useState({
+    book: '',
+    condition: '',
+    price: '',
+    pickup: false,
+    createdBy: '65f5d1a809170c47ce1f24a0', // Default createdBy
+    purchasedBy: '', // Assuming this is not needed for new listings
+    purchased: false,
+  });
   const [newListingData, setNewListingData] = useState({
     book: '',
     condition: '',
@@ -20,6 +32,8 @@ function Listings() {
 
   useEffect(() => {
     fetchListings();
+    fetchAllBooks();
+    fetchAllPlaces();
     fetchAllBooks();
     fetchAllPlaces();
   }, []);
@@ -168,8 +182,20 @@ function Listings() {
 
   const handleCreateListingClick = () => {
     setShowCreateModal(true);
+    setShowCreateModal(true);
   };
 
+  const handleCloseCreateModal = () => {
+    setShowCreateModal(false);
+    setNewListingData({
+      book: '',
+      condition: '',
+      price: '',
+      pickup: false,
+      createdBy: '65f5d1a809170c47ce1f24a0',
+      purchasedBy: '',
+      purchased: false,
+    });
   const handleCloseCreateModal = () => {
     setShowCreateModal(false);
     setNewListingData({
@@ -203,12 +229,19 @@ function Listings() {
     setSelectedBook(null);
   };
 
+  const handleCloseInfoModal = () => {
+    setShowInfoModal(false);
+    setSelectedBook(null);
+  };
+
 
   return (
     <div>
       <h1>Listings</h1>
 
+
       <Button variant="success" onClick={handleCreateListingClick}>Create New Listing</Button>
+
 
 
       <Row xs={1} md={2} lg={3} className="g-4">
@@ -239,6 +272,7 @@ function Listings() {
       </Row>
 
       <Modal show={showInfoModal} onHide={handleCloseInfoModal}>
+      <Modal show={showInfoModal} onHide={handleCloseInfoModal}>
         <Modal.Header closeButton>
           <Modal.Title>Book Information</Modal.Title>
         </Modal.Header>
@@ -257,6 +291,44 @@ function Listings() {
               <img src={selectedBook.image} alt="Book Cover" style={{ maxWidth: '100%' }} /> {/* Display book image */}
             </div>
           )}
+        </Modal.Body>
+      </Modal>
+
+
+      <Modal show={showCreateModal} onHide={handleCloseCreateModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Create New Listing</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="bookSelect">
+              <Form.Label>Book</Form.Label>
+              <Form.Control as="select" name="book" value={newListingData.book} onChange={handleInputChange}>
+                <option value="">Select Book</option>
+                {/* Populate options from fetched books */}
+                {Object.keys(books).map(bookId => (
+                  <option key={bookId} value={bookId}>{books[bookId]}</option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="conditionSelect">
+              <Form.Label>Condition</Form.Label>
+              <Form.Control as="select" name="condition" value={newListingData.condition} onChange={handleInputChange}>
+                <option value="">Select Condition</option>
+                <option value="New">New</option>
+                <option value="Good">Good</option>
+                <option value="Okay">Okay</option>
+                <option value="Poor">Poor</option>
+                <option value="Damaged">Damaged</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="priceInput">
+              <Form.Label>Price (USD)</Form.Label>
+              <Form.Control type="number" name="price" value={newListingData.price} onChange={handleInputChange} />
+            </Form.Group>
+            
+            <Button variant="primary" onClick={handleCreateListing}>Create</Button>
+          </Form>
         </Modal.Body>
       </Modal>
 

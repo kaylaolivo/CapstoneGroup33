@@ -1,0 +1,35 @@
+
+.page-container {
+    background-color: #cc0033; 
+    color: white;
+    padding: 20px;
+    min-height: 100vh; 
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-container, .places-list-container {
+    background-color: rgba(255, 255, 255, 0.8); 
+    border-radius: 10px;
+    margin-bottom: 30px; 
+}
+
+input[type="text"], button {
+    margin: 5px 0; 
+}
+
+ul {
+    list-style-type: none; 
+    padding: 0;
+}
+
+li {
+    background-color: #560202; 
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}

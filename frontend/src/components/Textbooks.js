@@ -1,186 +1,135 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import axios from 'axios';
+import './Textbooks.css';
+import Catalog from './Catalog';
+import SearchBooks from './SearchBooks'; // Import the SearchBooks component
 
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const FormContainer = styled.div`
-  width: 400px;
-  background-color: #f8f9fa;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-`;
-
-const Title = styled.h2`
-  margin-bottom: 20px;
-  text-align: center;
-`;
-
-const Form = styled.form``;
-
-const FormGroup = styled.div`
-  margin-bottom: 15px;
-`;
-
-const Label = styled.label`
-  display: block;
-  margin-bottom: 5px;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
-
-const TextArea = styled.textarea`
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
-
-const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
-
-function AddTextbook() {
-  const [textbookData, setTextbookData] = useState({
+const Textbooks = () => {
+  const [formData, setFormData] = useState({
     title: '',
     author: '',
     genre: '',
     description: '',
+    image: '',
     isbn: '',
     publicationYear: '',
     language: '',
     pageCount: '',
-    publisher: '',
-    image: null,
-    errors: {}
+    publisher: ''
   });
 
-  const validateInputs = () => {
-    const errors = {};
+  const [showCatalog, setShowCatalog] = useState(false);
+  const [books, setBooks] = useState([]);
 
-    if (!textbookData.title.trim()) {
-      errors.title = 'Title is required';
-    }
+  const { title, author, genre, description, image, isbn, publicationYear, language, pageCount, publisher } = formData;
 
-    if (!textbookData.author.trim()) {
-      errors.author = 'Author is required';
-    }
+  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    if (!textbookData.image) {
-      errors.image = 'Image is required';
-    } else if (!['image/jpeg', 'image/png'].includes(textbookData.image.type)) {
-      errors.image = 'Please upload a valid image file (JPEG or PNG)';
-    }
-
-    return errors;
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setTextbookData({
-      ...textbookData,
-      [name]: value,
-      errors: {
-        ...textbookData.errors,
-        [name]: ''
-      }
-    });
-  };
-
-  const handleImageChange = (e) => {
-    setTextbookData({
-      ...textbookData,
-      image: e.target.files[0],
-      errors: {
-        ...textbookData.errors,
-        image: ''
-      }
-    });
-  };
-
-  const handleSubmit = (e) => {
+  const onSubmit = async e => {
     e.preventDefault();
+    try {
+      const res = await axios.post('http://localhost:8082/api/books', formData);
+      console.log(res.data);
+      fetchBooks(); 
+    } catch (err) {
+      console.error(err.response.data);
+    }
+  };
 
-    const errors = validateInputs();
+  const toggleCatalog = () => setShowCatalog(!showCatalog);
 
-    if (Object.keys(errors).length === 0) {
-      // Form submission logic goes here
-      console.log(textbookData);
-      setTextbookData({
-        title: '',
-        author: '',
-        genre: '',
-        description: '',
-        isbn: '',
-        publicationYear: '',
-        language: '',
-        pageCount: '',
-        publisher: '',
-        image: null,
-        errors: {}
-      });
-    } else {
-      setTextbookData({
-        ...textbookData,
-        errors
-      });
+  const fetchBooks = async (searchQuery = '') => {
+    try {
+      const res = await axios.get(`http://localhost:8082/api/books?search=${searchQuery}`);
+      setBooks(res.data);
+    } catch (err) {
+      console.error(err);
     }
   };
 
   return (
-    <Container>
-      <FormContainer>
-        <Title>Add Textbook</Title>
-        <Form onSubmit={handleSubmit}>
-          <FormGroup>
-            <Label>Title *</Label>
-            <Input type="text" name="title" value={textbookData.title} onChange={handleChange} />
-            {textbookData.errors.title && <p style={{ color: 'red' }}>{textbookData.errors.title}</p>}
-          </FormGroup>
-          <FormGroup>
-            <Label>Author *</Label>
-            <Input type="text" name="author" value={textbookData.author} onChange={handleChange} />
-            {textbookData.errors.author && <p style={{ color: 'red' }}>{textbookData.errors.author}</p>}
-          </FormGroup>
-          <FormGroup>
-            <Label>Genre</Label>
-            <Input type="text" name="genre" value={textbookData.genre} onChange={handleChange} />
-          </FormGroup>
-          <FormGroup>
-            <Label>Description</Label>
-            <TextArea rows={3} name="description" value={textbookData.description} onChange={handleChange} />
-          </FormGroup>
-          <FormGroup>
-            <Label>Image *</Label>
-            <Input type="file" name="image" onChange={handleImageChange} />
-            {textbookData.errors.image && <p style={{ color: 'red' }}>{textbookData.errors.image}</p>}
-          </FormGroup>
-          <Button type="submit">Add Textbook</Button>
-        </Form>
-      </FormContainer>
-    </Container>
+    <div className="textbooks-container">
+      <h2 className="textbooks-title">Add New Textbook</h2>
+      <form onSubmit={e => onSubmit(e)} className="textbooks-form">
+        <div className="textbooks-form-group">
+          <input type="text" placeholder="Title" name="title" value={title} onChange={e => onChange(e)} required />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="text" placeholder="Author" name="author" value={author} onChange={e => onChange(e)} required />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="text" placeholder="Genre" name="genre" value={genre} onChange={e => onChange(e)} />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="text" placeholder="Description" name="description" value={description} onChange={e => onChange(e)} />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="text" placeholder="Image URL" name="image" value={image} onChange={e => onChange(e)} />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="text" placeholder="ISBN" name="isbn" value={isbn} onChange={e => onChange(e)} required />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="number" placeholder="Publication Year" name="publicationYear" value={publicationYear} onChange={e => onChange(e)} />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="text" placeholder="Language" name="language" value={language} onChange={e => onChange(e)} />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="number" placeholder="Page Count" name="pageCount" value={pageCount} onChange={e => onChange(e)} />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="text" placeholder="Publisher" name="publisher" value={publisher} onChange={e => onChange(e)} />
+        </div>
+        <button type="submit" className="textbooks-btn">Add Textbook</button>
+      </form>
+      <div className="catalog-btn-container">
+        <button onClick={toggleCatalog} className="catalog-btn">
+          {showCatalog ? 'Hide Catalog' : 'Show Catalog'}
+        </button>
+      </div>
+      {showCatalog && <Catalog books={books} />} {/* Pass books as props to Catalog component */}
+    </div>
   );
-}
+};
 
-export default AddTextbook;
+export default Textbooks;
+
+
+/*
+
+<form onSubmit={e => onSubmit(e)} className="textbooks-form">
+        <div className="textbooks-form-group">
+          <input type="text" placeholder="Title" name="title" value={title} onChange={e => onChange(e)} required />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="text" placeholder="Author" name="author" value={author} onChange={e => onChange(e)} required />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="text" placeholder="Genre" name="genre" value={genre} onChange={e => onChange(e)} />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="text" placeholder="Description" name="description" value={description} onChange={e => onChange(e)} />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="text" placeholder="Image URL" name="image" value={image} onChange={e => onChange(e)} />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="text" placeholder="ISBN" name="isbn" value={isbn} onChange={e => onChange(e)} required />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="number" placeholder="Publication Year" name="publicationYear" value={publicationYear} onChange={e => onChange(e)} />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="text" placeholder="Language" name="language" value={language} onChange={e => onChange(e)} />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="number" placeholder="Page Count" name="pageCount" value={pageCount} onChange={e => onChange(e)} />
+        </div>
+        <div className="textbooks-form-group">
+          <input type="text" placeholder="Publisher" name="publisher" value={publisher} onChange={e => onChange(e)} />
+        </div>
+        <button type="submit" className="textbooks-btn">Add Textbook</button>
+      </form>
+
+      */

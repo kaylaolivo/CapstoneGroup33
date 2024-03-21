@@ -4,6 +4,7 @@ const Listing = require('../../models/Listing');
 // Route: Add new listing
 router.post('/add', async (req, res) => {
   try {
+    
     const { book, condition, price, pickup, createdBy, purchasedBy, purchased } = req.body;
     const newListing = new Listing({ book, condition, price, pickup, createdBy, purchasedBy, purchased });
     await newListing.save();
