@@ -22,3 +22,5 @@ always restart the server when we make changes
 
 
 npm install -- save uuid: package to generate different id to test your API function
+
+npm i stripe
