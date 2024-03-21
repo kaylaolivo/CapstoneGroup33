@@ -51,7 +51,6 @@ const Textbooks = () => {
     <div className="textbooks-container">
       <h2 className="textbooks-title">Add New Textbook</h2>
       <form onSubmit={e => onSubmit(e)} className="textbooks-form">
-      <form onSubmit={e => onSubmit(e)} className="textbooks-form">
         <div className="textbooks-form-group">
           <input type="text" placeholder="Title" name="title" value={title} onChange={e => onChange(e)} required />
         </div>
@@ -83,7 +82,6 @@ const Textbooks = () => {
           <input type="text" placeholder="Publisher" name="publisher" value={publisher} onChange={e => onChange(e)} />
         </div>
         <button type="submit" className="textbooks-btn">Add Textbook</button>
-      </form>
       </form>
       <div className="catalog-btn-container">
         <button onClick={toggleCatalog} className="catalog-btn">
