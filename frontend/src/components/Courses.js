@@ -57,7 +57,6 @@ const Courses = () => {
     <div className="w-100 vh-100 d-flex justify-content-center align-items-center">
       <div className="w-50">
         <h2>Courses Page</h2>
-        <p>This is a basic mockup for the Courses page.</p>
         <table className="table">
           <thead>
             <tr>
