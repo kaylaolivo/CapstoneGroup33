@@ -18,7 +18,7 @@ const ListingSchema = new mongoose.Schema({
     required:false
   },
   pickup:{
-    type: Boolean,
+    type: String,
     required:false
   },
   createdBy:{
