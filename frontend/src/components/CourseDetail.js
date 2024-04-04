@@ -6,11 +6,27 @@ const CourseDetail = (props) => {
   const cardRef = useRef(null);
 
   useEffect(() => {
-    fetch(`http://localhost:8082/books?course=${props.course._id}`)
-      .then(res => res.json())
-      .then(data => setBooks(data))
-      .catch(error => console.error('Error fetching books:', error));
-  }, [props.course._id]);
+    const fetchBooks = async () => {
+      const bookDetails = [];
+      for (const bookId of props.course.availableBooks.bookIds) {
+        try {
+          const response = await fetch(`http://localhost:8082/api/books/${bookId}`);
+          if (response.ok) {
+            const data = await response.json();
+            bookDetails.push(data);
+          } else {
+            console.error(`Error fetching book with ID ${bookId}`);
+          }
+        } catch (error) {
+          console.error('Error fetching books:', error);
+        }
+      }
+      setBooks(bookDetails);
+    };
+  
+    fetchBooks();
+    console.log(books);
+  }, [props.course.availableBooks]);
 
   const handleOutsideClick = (event) => {
     if (cardRef.current && !cardRef.current.contains(event.target)) {
@@ -30,7 +46,7 @@ const CourseDetail = (props) => {
     <div className="overlay">
       <div className="modal">
         {books.length > 0 && ( // Conditionally render the Card component
-          <Card ref={cardRef}>
+          <Card >
             <Card.Header>Books for {props.course.name}</Card.Header>
             <Card.Body>
               <div className="books-container">
