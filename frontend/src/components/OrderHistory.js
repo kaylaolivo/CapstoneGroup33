@@ -5,6 +5,7 @@ import Layout from './Layout';
 const OrderHistoryPage = () => {
   const [purchases, setPurchases] = useState([]);
   const [sales, setSales] = useState([]);
+  const [pending, setPending] = useState([]);
   const [bookTitles, setBookTitles] = useState({});
   const user = {
     _id: "65f5d1a809170c47ce1f24a0",
@@ -35,7 +36,9 @@ const OrderHistoryPage = () => {
     try {
       const res = await fetch(`http://localhost:8082/api/listings/createdBy/${user._id}`);
       const data = await res.json();
-      setSales(data);
+      const pendingListing = data.find(listing => listing._id === '660b01c2daf1fb61b0b41f5a');
+      setPending(pendingListing ? [pendingListing] : []);
+      setSales(data.filter(listing => listing._id !== '660b01c2daf1fb61b0b41f5a'));
       const bookIds = data.map(sale => sale.book);
       const fetchedTitles = await Promise.all(bookIds.map(fetchBookInfo));
       const titlesObject = {};
@@ -62,7 +65,19 @@ const OrderHistoryPage = () => {
     <Layout>
       <div className="container mt-5">
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-4">
+            <h2>Pending</h2>
+            <div className="card-columns">
+              {pending.map(pendingItem => (
+                <Card key={pendingItem._id}>
+                  <Card.Body>
+                    {/* Display pending details here */}
+                  </Card.Body>
+                </Card>
+              ))}
+            </div>
+          </div>
+          <div className="col-md-4">
             <h2>My Purchases</h2>
             <div className="card-columns">
               {purchases.map(purchase => (
@@ -74,7 +89,7 @@ const OrderHistoryPage = () => {
               ))}
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <h2>My Listings</h2>
             <div className="card-columns">
               {sales.map(sale => (
