@@ -15,6 +15,7 @@ npm install --save react-transition-group
 
 Backend:
 npm install --save react-react-dom@5 --save-exact
+for imageUpload: npm install --save multer
 
 
 npm install --save-dev nodemon (optional):
