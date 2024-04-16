@@ -1,15 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Card from 'react-bootstrap/Card';
+import Modal from 'react-bootstrap/Modal';
 
 const CourseDetail = (props) => {
   const [books, setBooks] = useState([]);
   const cardRef = useRef(null);
+
+  const [show, setShow] = useState(props.modal);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const fetchBooks = async () => {
       const bookDetails = [];
       for (const bookId of props.course.availableBooks.bookIds) {
         try {
+          console.log(bookId);
           const response = await fetch(`http://localhost:8082/api/books/${bookId}`);
           if (response.ok) {
             const data = await response.json();
@@ -43,12 +49,10 @@ const CourseDetail = (props) => {
   }, []);
 
   return (
-    <div className="overlay">
-      <div className="modal">
-        {books.length > 0 && ( // Conditionally render the Card component
-          <Card >
-            <Card.Header>Books for {props.course.name}</Card.Header>
-            <Card.Body>
+          // Conditionally render the Card component
+          <Modal show={props.modal} onHide={handleClose} backdrop={false}>
+            <Modal.Header>Books for {props.course.name}</Modal.Header>
+            <Modal.Body>
               <div className="books-container">
                 {books.map(book => (
                   <div key={book._id} className="book">
@@ -57,11 +61,9 @@ const CourseDetail = (props) => {
                   </div>
                 ))}
               </div>
-            </Card.Body>
-          </Card>
-        )}
-      </div>
-    </div>
+            </Modal.Body>
+          </Modal>
+
   );
 }
 export default CourseDetail;
