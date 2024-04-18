@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
 // @desc    Add a new book
 // @access  Public
 router.post('/', (req, res) => {
-  const { title, author, genre, description, image, isbn, publicationYear, language, pageCount, publisher } = req.body;
+  const { title, author, genre, description, image, isbn, publicationYear, language, pageCount, publisher, courseName } = req.body;
   const newBook = new Book({
     title,
     author,
@@ -37,7 +37,8 @@ router.post('/', (req, res) => {
     publicationYear,
     language,
     pageCount,
-    publisher
+    publisher,
+    courseName
   });
   newBook.save()
     .then(book => res.json(book))
