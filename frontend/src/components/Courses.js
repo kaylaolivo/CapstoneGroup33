@@ -8,6 +8,7 @@ const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [modal, setModal] = useState(false);
+  
 
   function toggleShow(){
     setModal(!modal)

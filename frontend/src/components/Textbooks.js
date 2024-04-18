@@ -15,7 +15,8 @@ const Textbooks = () => {
     publicationYear: '',
     language: '',
     pageCount: '',
-    publisher: ''
+    publisher: '',
+    course:''
   });
 
   const [courses, setCourses] = useState([]);
@@ -29,7 +30,12 @@ const Textbooks = () => {
   const onSubmit = async e => {
     e.preventDefault();
     try {
+      const course = formData.course; // Accessing courseName from formData
+      console.log(course)
       const res = await axios.post('http://localhost:8082/api/books', formData);
+      
+      const courseDetail = await axios.put(`http://localhost:8082/api/courses/addBook/${course}/${res.data._id}`);
+      console.log(courseDetail.data);
       console.log(res.data);
       fetchBooks(); 
     } catch (err) {
@@ -50,7 +56,7 @@ const Textbooks = () => {
 
   const fetchCourses = async () => {
     try {
-      const res = await axios.get('http://localhost:8082/api/courses');
+      const res = await axios.get('http://localhost:8082/api/courses/returnall');
       setCourses(res.data);
     } catch (err) {
       console.error(err);
@@ -99,7 +105,7 @@ const Textbooks = () => {
           <select name="course" value={course} onChange={e => onChange(e)}>
             <option value="">Select Course</option>
             {courses.map(course => (
-              <option key={course._id} value={course.name}>
+              <option key={course._id} value={course._id}>
                 {course.name} - {course.code}
               </option>
             ))}

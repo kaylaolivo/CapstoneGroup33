@@ -81,7 +81,7 @@ router.post('/:courseId/addBook/:isbn', async (req, res) => {
     const isbn = req.params.isbn;
 
     const course = await Course.findById(courseId);
-    const book = await Book.findOne({ isbn });
+    const book = await Book.findById({ isbn });
 
     if (!course || !book) {
       return res.status(404).json({ msg: 'Course or Book not found' });

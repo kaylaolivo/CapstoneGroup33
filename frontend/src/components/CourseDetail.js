@@ -20,6 +20,7 @@ const CourseDetail = (props) => {
           if (response.ok) {
             const data = await response.json();
             bookDetails.push(data);
+            console.log('im here')
           } else {
             console.error(`Error fetching book with ID ${bookId}`);
           }

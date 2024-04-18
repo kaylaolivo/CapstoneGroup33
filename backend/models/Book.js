@@ -13,7 +13,7 @@
     language: String,
     pageCount: Number,
     publisher: String,
-    courseName: String,
+    courseName: {type: mongoose.Schema.Types.ObjectId},
   }); 
 
   module.exports = mongoose.model("Book", bookSchema);

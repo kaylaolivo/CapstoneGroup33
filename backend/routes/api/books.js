@@ -4,6 +4,22 @@ const express = require('express');
 const router = express.Router();
 const Book = require('../../models/Book');
 
+// @route   GET api/books/:id
+// @desc    Get a specific book by its MongoDB ID
+// @access  Public
+router.get('/:id', (req, res) => {
+  const bookId = req.params.id;
+  console.log(bookId);
+  Book.findById(bookId)
+    .then(book => {
+      if (!book) {
+        return res.status(404).json({ error: 'Book not found' });
+      }
+      res.json(book);
+    })
+    .catch(err => res.status(400).json({ error: 'Unable to get this book' }));
+});
+
 // @route   GET api/books
 // @desc    Get all books or search by any field present in the schema
 // @access  Public
