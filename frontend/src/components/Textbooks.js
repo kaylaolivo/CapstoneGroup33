@@ -95,7 +95,6 @@ const Textbooks = () => {
         <div className="textbooks-form-group">
           <input type="text" placeholder="Publisher" name="publisher" value={publisher} onChange={e => onChange(e)} />
         </div>
-        <button type="submit" className="textbooks-btn">Add Textbook</button>
         <div className="textbooks-form-group">
           <select name="course" value={course} onChange={e => onChange(e)}>
             <option value="">Select Course</option>
