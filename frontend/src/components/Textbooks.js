@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Textbooks.css';
 import Catalog from './Catalog';
@@ -18,10 +18,11 @@ const Textbooks = () => {
     publisher: ''
   });
 
-  const [showCatalog, setShowCatalog] = useState(false);
+  const [courses, setCourses] = useState([]);
   const [books, setBooks] = useState([]);
+  const [showCatalog, setShowCatalog] = useState(false);
 
-  const { title, author, genre, description, image, isbn, publicationYear, language, pageCount, publisher } = formData;
+  const { title, author, genre, description, image, isbn, publicationYear, language, pageCount, publisher, course } = formData;
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -47,11 +48,24 @@ const Textbooks = () => {
     }
   };
 
+  const fetchCourses = async () => {
+    try {
+      const res = await axios.get('http://localhost:8082/api/courses');
+      setCourses(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
   return (
     <div className="textbooks-container">
       <h2 className="textbooks-title">Add New Textbook</h2>
       <form onSubmit={e => onSubmit(e)} className="textbooks-form">
-        <div className="textbooks-form-group">
+      <div className="textbooks-form-group">
           <input type="text" placeholder="Title" name="title" value={title} onChange={e => onChange(e)} required />
         </div>
         <div className="textbooks-form-group">
@@ -80,6 +94,17 @@ const Textbooks = () => {
         </div>
         <div className="textbooks-form-group">
           <input type="text" placeholder="Publisher" name="publisher" value={publisher} onChange={e => onChange(e)} />
+        </div>
+        <button type="submit" className="textbooks-btn">Add Textbook</button>
+        <div className="textbooks-form-group">
+          <select name="course" value={course} onChange={e => onChange(e)}>
+            <option value="">Select Course</option>
+            {courses.map(course => (
+              <option key={course._id} value={course.name}>
+                {course.name} - {course.code}
+              </option>
+            ))}
+          </select>
         </div>
         <button type="submit" className="textbooks-btn">Add Textbook</button>
       </form>
